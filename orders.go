@@ -40,10 +40,15 @@ func openOrders(coin string, print bool) []Order {
 }
 
 // List all buys that match current coin holding and show P&L
-func profitLoss() {
+func profitLoss() string {
 
 	orders := openOrders("MIDBULL", false)
 	price := recentClose("MIDBULL", false)
+
+	if len(price) < 1 {
+		fmt.Println("Cannot retrieve prices right now. Try again in 10 seconds")
+		return "Cannot retrieve prices at this time"
+	}
 
 	balance := getBalances("MIDBULL")
 	// TODO: Get coin balance dynamically (not by current key value)
@@ -52,6 +57,7 @@ func profitLoss() {
 	var size float64
 	var sumPercentage float64
 	var countTotal float64
+	fmt.Printf("\n")
 	for _, order := range orders {
 
 		// Ignore Sell orders
@@ -73,7 +79,6 @@ func profitLoss() {
 
 		// Work out the percentage increase or decrease of our buys
 		perc := math.Round((usdCurrentValue-usdBuyValue)/usdBuyValue*100*100) / 100
-
 		fmt.Printf("|%v| $%-v \t |Current:| $%v  \t |%%+-| %v%%\n", order.Side, usdBuyValue, usdCurrentValue, perc)
 
 		sumPercentage = sumPercentage + (perc / 100)
@@ -81,6 +86,10 @@ func profitLoss() {
 
 	}
 
-	fmt.Printf("\nOverall P&L Percentage %.2f", (sumPercentage/countTotal)*100)
+	avgPL := fmt.Sprintf("%.2f", (sumPercentage/countTotal)*100)
+
+	fmt.Printf("\nAverage P&L Percentage %v", avgPL)
+
+	return avgPL
 
 }

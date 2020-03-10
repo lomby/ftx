@@ -119,6 +119,4 @@ func main() {
 		log.Fatal(err)
 	}
 
-	// openOrders("MIDBULL")
-	// recentClose("MIDBULL")
 }
