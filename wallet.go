@@ -11,7 +11,7 @@ type Balance struct {
 	Total float64 `json:"total"`
 }
 
-func getBalances() {
+func getBalances(coin string) []Balance {
 	r := request("GET", "wallet/balances")
 
 	var response Response
@@ -21,8 +21,14 @@ func getBalances() {
 	json.NewDecoder(r.Body).Decode(&response)
 
 	for _, balance := range balances {
-		fmt.Println(balance.Total)
+		if coin == "ALL" {
+			fmt.Printf("Coin/Balance: %v \t %v \n", balance.Coin, balance.Total)
+		} else if coin == balance.Coin {
+			fmt.Printf("Coin/Balance: %v \t %v \n", balance.Coin, balance.Total)
+			break
+		}
 	}
 
-	fmt.Println(balances)
+	return balances
+
 }

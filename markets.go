@@ -30,7 +30,7 @@ func market(coin string) {
 	fmt.Println(market)
 }
 
-func recentClose(coin string) {
+func recentClose(coin string, print bool) []Price {
 	r := request("GET", "markets/"+coin+"/USD/candles?resolution=15&limit=1")
 
 	var response Response
@@ -39,5 +39,9 @@ func recentClose(coin string) {
 	defer r.Body.Close()
 	json.NewDecoder(r.Body).Decode(&response)
 
-	fmt.Println(price[0].Close)
+	if print {
+		fmt.Println(price[0].Close)
+	}
+
+	return price
 }

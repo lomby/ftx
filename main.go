@@ -39,7 +39,31 @@ func commands() {
 			Aliases: []string{"p"},
 			Usage:   "Get recent close Price",
 			Action: func(c *cli.Context) {
-				recentClose("MIDBULL")
+				recentClose("MIDBULL", true)
+			},
+		},
+		{
+			Name:    "balances",
+			Aliases: []string{"b"},
+			Usage:   "List Balances (All coins)",
+			Action: func(c *cli.Context) {
+				getBalances("ALL")
+			},
+		},
+		{
+			Name:    "orders",
+			Aliases: []string{"o"},
+			Usage:   "Open Orders",
+			Action: func(c *cli.Context) {
+				openOrders("MIDBULL", true)
+			},
+		},
+		{
+			Name:    "profitloss",
+			Aliases: []string{"pl"},
+			Usage:   "Profit and Loss",
+			Action: func(c *cli.Context) {
+				profitLoss()
 			},
 		},
 	}
