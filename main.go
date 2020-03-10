@@ -21,10 +21,6 @@ type Response struct {
 	Result  interface{} `json:"result"`
 }
 
-type Account struct {
-	Username string `json:"username"`
-}
-
 func info() {
 	app.Name = "MidBull Trader"
 	app.Usage = "Personal app for trading midbull"
